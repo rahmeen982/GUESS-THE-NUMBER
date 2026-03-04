@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Number Guessing Game</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #4e73df, #1cc88a);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .game-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            text-align: center;
+            width: 350px;
+        }
+
+        h2 {
+            margin-bottom: 10px;
+        }
+
+        input {
+            padding: 10px;
+            width: 80%;
+            margin: 10px 0;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 5px;
+        }
+
+        #guessBtn {
+            background-color: #4e73df;
+            color: white;
+        }
+
+        #resetBtn {
+            background-color: #e74a3b;
+            color: white;
+        }
+
+        #message {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        #attempts {
+            margin-top: 10px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+<div class="game-container">
+    <h2>🎯 Number Guessing Game</h2>
+    <p>Guess a number between 1 and 100</p>
+
+    <input type="number" id="userGuess" placeholder="Enter your guess">
+    <br>
+    <button id="guessBtn">Guess</button>
+    <button id="resetBtn">Restart</button>
+
+    <div id="message"></div>
+    <div id="attempts"></div>
+</div>
+
+<script>
+    $(document).ready(function() {
+
+        let randomNumber = Math.floor(Math.random() * 100) + 1;
+        let maxAttempts = 5;
+        let attemptsLeft = maxAttempts;
+
+        $("#attempts").text("Attempts left: " + attemptsLeft);
+
+        $("#guessBtn").click(function() {
+
+            let guess = parseInt($("#userGuess").val());
+
+          if(guess == ""){
+            $("#message").text("⚠ Please enter a number!");
+            return;
+        }
+
+            if (attemptsLeft <= 0) {
+                $("#message").text("❌ No attempts left! The number was " + randomNumber);
+                return;
+            }
+
+            attemptsLeft--;
+            $("#attempts").text("Attempts left: " + attemptsLeft);
+
+            if (guess === randomNumber) {
+                $("#message").text("🎉 Correct! You guessed the number!");
+                $("#guessBtn").prop("disabled", true);
+            } 
+            else if (guess > randomNumber) {
+                $("#message").text("📈 Too High!");
+            } 
+            else {
+                $("#message").text("📉 Too Low!");
+            }
+
+            if (attemptsLeft === 0 && guess !== randomNumber) {
+                $("#message").text("❌ Game Over! The number was " + randomNumber);
+                $("#guessBtn").prop("disabled", true);
+            }
+
+        });
+
+        $("#resetBtn").click(function() {
+            randomNumber = Math.floor(Math.random() * 100) + 1;
+            attemptsLeft = maxAttempts;
+            $("#attempts").text("Attempts left: " + attemptsLeft);
+            $("#message").text("");
+            $("#userGuess").val("");
+            $("#guessBtn").prop("disabled", false);
+        });
+
+    });
+</script>
+
+</body>
+</html>
