@@ -12,7 +12,7 @@ A simple number guessing game built using HTML, CSS, JavaScript, and jQuery.
 - If the player guesses correctly, they win.
 - If attempts run out, the game ends.
 
-## 🛠 Technologies Used
+## Technologies Used
 
 - HTML
 - CSS
